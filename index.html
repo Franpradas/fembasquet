@@ -157,7 +157,16 @@
                 <div>
                     <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-2">Agenda <span
                             class="text-mislata-green">Próximos Partidos</span></h2>
-                    <p class="text-gray-500">Temporada 2025-2026 (Hasta Mayo)</p>
+                    
+                    <div class="flex flex-col items-start gap-2">
+                        <p class="text-mislata-green font-bold text-xl" x-text="currentLabel"></p>
+                        <button 
+                            @click="toggleWeek()" 
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition shadow-sm flex items-center gap-2"
+                            x-text="currentButtonLabel">
+                        </button>
+                    </div>
+
                     <p class="text-xs text-orange-600 mt-1 italic">* Los partidos pueden sufrir variaciones. Consultad
                         el canal oficial de la FBCV a través de su app.</p>
                 </div>
@@ -246,7 +255,7 @@
     </section>
 
     <!-- Calendar Section (New) -->
-    <section id="calendario" class="py-16 bg-white">
+    <section id="calendario" style="display: none !important;" class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div @click="showCalendar = !showCalendar"
                 class="cursor-pointer group select-none flex items-center justify-center mb-10 transition-colors duration-300">
