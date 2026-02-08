@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asociación FemBàsquet - Mislata BC</title>
+    <meta name="description"
+        content="Web oficial de la Asociación FemBàsquet Mislata BC. Uniendo a las familias del baloncesto.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mislata-green': '#009640',
+                        'mislata-orange': '#FF6600',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        /* Custom Styles if needed beyond Tailwind */
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #009640, #FF6600);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased" x-data="appData()" x-init="init()">
+
+    <!-- Header -->
+    <header class="fixed w-full bg-white/95 backdrop-blur-sm shadow-md z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <div
+                    class="w-10 h-10 bg-mislata-green rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:bg-mislata-orange transition-colors duration-300">
+                    FB
+                </div>
+                <span
+                    class="font-heading font-bold text-xl text-mislata-green group-hover:text-mislata-orange transition-colors">FemBàsquet</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#inicio" class="font-medium hover:text-mislata-orange transition-colors">Inicio</a>
+                <a href="#partidos" class="font-medium hover:text-mislata-orange transition-colors">Partidos</a>
+                <a href="#actividades" class="font-medium hover:text-mislata-orange transition-colors">Actividades</a>
+                <a href="#junta" class="font-medium hover:text-mislata-orange transition-colors">Junta Directiva</a>
+                <a href="#colaborar" class="font-medium hover:text-mislata-orange transition-colors">Colaborar</a>
+                <a href="#unete"
+                    class="px-5 py-2 bg-mislata-orange text-white rounded-full font-bold shadow-md hover:bg-orange-600 hover:shadow-lg transition-all transform hover:-translate-y-0.5">Únete</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-mislata-green focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x-show="!mobileMenuOpen"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x-show="mobileMenuOpen"
+                        x-cloak d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen" x-transition.origin.top
+            class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full px-4 py-4 flex flex-col space-y-4"
+            @click.away="mobileMenuOpen = false">
+            <a href="#inicio" @click="mobileMenuOpen = false"
+                class="block font-medium hover:text-mislata-orange">Inicio</a>
+            <a href="#partidos" @click="mobileMenuOpen = false"
+                class="block font-medium hover:text-mislata-orange">Partidos</a>
+            <a href="#actividades" @click="mobileMenuOpen = false"
+                class="block font-medium hover:text-mislata-orange">Actividades</a>
+            <a href="#junta" @click="mobileMenuOpen = false" class="block font-medium hover:text-mislata-orange">Junta
+                Directiva</a>
+            <a href="#colaborar" @click="mobileMenuOpen = false"
+                class="block font-medium hover:text-mislata-orange">Colaborar</a>
+            <a href="#unete" @click="mobileMenuOpen = false"
+                class="block px-5 py-3 bg-mislata-orange text-white text-center rounded-lg font-bold">Únete</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 overflow-hidden relative">
+        <!-- Banner Image with localized placeholder if available, otherwise fallback. Using 'Banner.gif' as found in directory. -->
+        <div class="absolute inset-0 z-0 bg-[url('Banner.gif')] bg-cover bg-center"></div>
+        <!-- Dark Overlay for Readability -->
+        <div class="absolute inset-0 z-0 bg-black/60"></div>
+
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1
+                class="font-heading text-4xl md:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight animate-fade-in-up text-white">
+                Somos <span class="text-mislata-green">Familia</span>,<br>
+                Somos <span class="text-mislata-orange">Mislata BC</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up"
+                style="animation-delay: 0.2s;">
+                Asociación FemBàsquet - Uniendo a las familias del baloncesto para crear una comunidad más fuerte y
+                vibrante.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up"
+                style="animation-delay: 0.4s;">
+                <a href="#unete"
+                    class="px-8 py-4 bg-mislata-orange text-white text-lg font-bold rounded-full shadow-lg hover:bg-orange-600 hover:shadow-xl transition-all transform hover:-translate-y-1 hover:scale-105">
+                    ¡Inscríbete ahora!
+                </a>
+                <a href="#actividades"
+                    class="px-8 py-4 bg-white text-mislata-green border-2 border-mislata-green text-lg font-bold rounded-full shadow-md hover:bg-green-50 transition-all transform hover:-translate-y-1">
+                    Ver Actividades
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Matches Section -->
+    <section id="partidos" class="py-16 bg-gray-50 bg-pattern">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-2">Agenda <span
+                            class="text-mislata-green">Próximos Partidos</span></h2>
+                    <p class="text-gray-500">Temporada 2025-2026 (Hasta Mayo)</p>
+                    <p class="text-xs text-orange-600 mt-1 italic">* Los partidos pueden sufrir variaciones. Consultad
+                        el canal oficial de la FBCV a través de su app.</p>
+                </div>
+            </div>
+
+            <!-- Grid of Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <template x-for="category in categories" :key="category.name">
+                    <div
+                        class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <!-- Header -->
+                        <div
+                            class="bg-gradient-to-r from-mislata-green to-green-600 px-3 py-2 flex justify-between items-center">
+                            <h3 class="text-white font-bold text-sm truncate" x-text="category.name"></h3>
+                            <span
+                                class="text-[10px] text-white/80 bg-white/20 px-1.5 py-0.5 rounded-full">Temporada</span>
+                        </div>
+
+                        <!-- Scrollable Matches Container -->
+                        <div class="relative group">
+                            <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide p-3 gap-3">
+                                <template x-for="match in category.matches">
+                                    <div
+                                        class="min-w-full snap-center bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs text-gray-500 uppercase font-bold">Rival</span>
+                                                <span class="font-bold text-gray-800" x-text="match.rival"></span>
+                                            </div>
+                                            <span class="px-2 py-1 text-xs rounded-full font-bold"
+                                                :class="match.casa ? 'bg-green-100 text-mislata-green' : 'bg-orange-100 text-mislata-orange'"
+                                                x-text="match.casa ? 'CASA' : 'FUERA'"></span>
+                                        </div>
+
+                                        <div class="space-y-1 text-sm text-gray-600 border-t border-gray-200 pt-2 mt-2">
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 mr-2 text-mislata-orange" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                                <span x-text="match.fecha"></span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 mr-2 text-mislata-orange" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                <span x-text="match.hora"></span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 mr-2 text-mislata-orange" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                                    </path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                <span class="truncate w-40" x-text="match.lugar"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <!-- Scroll Hint Overlay -->
+                            <div
+                                class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none flex items-center justify-end pr-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-4 h-4 text-gray-400 animate-bounce-slow" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Calendar Section (New) -->
+    <section id="calendario" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div @click="showCalendar = !showCalendar"
+                class="cursor-pointer group select-none flex items-center justify-center mb-10 transition-colors duration-300">
+                <h2
+                    class="font-heading text-3xl md:text-4xl font-bold text-gray-800 text-center group-hover:text-mislata-green transition-colors">
+                    Calendario <span
+                        class="text-mislata-orange group-hover:text-mislata-green transition-colors">Completo</span>
+                </h2>
+                <svg class="w-8 h-8 ml-3 text-gray-400 group-hover:text-mislata-green transition-transform duration-300"
+                    :class="{'rotate-180': showCalendar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+
+            <div x-show="showCalendar" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-95"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-95"
+                class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                <!-- Calendar Header -->
+                <div class="bg-gray-800 text-white p-4 flex justify-between items-center">
+                    <button @click="prevMonth()" class="hover:bg-gray-700 p-2 rounded-full transition-colors"><svg
+                            class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
+                        </svg></button>
+                    <h3 class="font-bold text-xl" x-text="monthNames[month] + ' ' + year"></h3>
+                    <button @click="nextMonth()" class="hover:bg-gray-700 p-2 rounded-full transition-colors"><svg
+                            class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg></button>
+                </div>
+
+                <!-- Calendar Grid (Dynamic) -->
+                <div class="grid grid-cols-7 gap-px bg-gray-200">
+                    <!-- Days Header -->
+                    <template x-for="day in days" :key="day">
+                        <div class="bg-gray-100 p-2 text-center text-xs font-bold text-gray-500 uppercase" x-text="day">
+                        </div>
+                    </template>
+
+                    <!-- Blank Days -->
+                    <template x-for="blank in blankDays">
+                        <div class="bg-white h-24 p-1"></div>
+                    </template>
+
+                    <!-- Real Days -->
+                    <template x-for="date in no_of_days">
+                        <div
+                            class="bg-white h-24 p-1 relative group hover:bg-green-50 transition-colors cursor-pointer overflow-hidden border-t border-l border-gray-100">
+                            <span class="font-bold text-sm"
+                                :class="isToday(date) ? 'text-white bg-mislata-green rounded-full w-6 h-6 flex items-center justify-center' : 'text-gray-700'"
+                                x-text="date"></span>
+
+                            <!-- Matches for this day -->
+                            <div class="mt-1 space-y-1 overflow-y-auto max-h-[4.5rem] scrollbar-hide">
+                                <template x-for="match in getMatchesForDay(date)">
+                                    <div class="px-1 py-0.5 rounded text-[9px] leading-tight truncate"
+                                        :class="match.casa ? 'bg-green-100 text-mislata-green' : 'bg-orange-100 text-mislata-orange'"
+                                        :title="match.name + ' vs ' + match.rival + ' (' + match.hora + ')'">
+                                        <span x-text="match.nameShort"></span> <span x-text="match.rival"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <a href="#"
+                    class="inline-flex items-center text-mislata-green font-bold hover:text-mislata-orange transition-colors">
+                    Ver calendario completo en Google Calendar
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function appData() {
+            return {
+                showCalendar: false, // Hidden by default
+                mobileMenuOpen: false,
+                month: 1, // Start Feb (0-indexed = 1)
+                year: 2026,
+                no_of_days: [],
+                blankDays: [],
+                days: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                categories: [],
+                allMatches: [],
+
+                init() {
+                    this.categories = this.generateMatches();
+                    // Flatten matches for calendar lookup
+                    this.categories.forEach(cat => {
+                        cat.matches.forEach(m => {
+                            // Enriched match object + Category Name
+                            this.allMatches.push({
+                                ...m,
+                                category: cat.name,
+                                nameShort: cat.name.replace('Masc', '').replace('Femenino', 'Fem').replace('Senior', 'Sen').replace('Junior', 'Jun').replace('Cadete', 'Cad').trim()
+                            });
+                        });
+                    });
+                    this.getNoOfDays();
+                },
+
+                isToday(date) {
+                    const today = new Date();
+                    const d = new Date(this.year, this.month, date);
+                    return today.toDateString() === d.toDateString();
+                },
+
+                getNoOfDays() {
+                    let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+                    // Day of week of the 1st (0=Sun, 1=Mon...)
+                    // We want Mon=0...Sun=6
+                    let dayOfWeek = new Date(this.year, this.month).getDay();
+                    // JS getDay(): Sun=0, Mon=1...Sat=6
+                    // Convert to Mon=0 start:
+                    let blankdaysArray = [];
+                    let adjustedDay = (dayOfWeek === 0) ? 6 : dayOfWeek - 1;
+
+                    for (var i = 1; i <= adjustedDay; i++) {
+                        blankdaysArray.push(i);
+                    }
+
+                    let daysArray = [];
+                    for (var i = 1; i <= daysInMonth; i++) {
+                        daysArray.push(i);
+                    }
+
+                    this.blankDays = blankdaysArray;
+                    this.no_of_days = daysArray;
+                },
+
+                prevMonth() {
+                    if (this.month === 0) {
+                        this.month = 11;
+                        this.year--;
+                    } else {
+                        this.month--;
+                    }
+                    this.getNoOfDays();
+                },
+
+                nextMonth() {
+                    if (this.month === 11) {
+                        this.month = 0;
+                        this.year++;
+                    } else {
+                        this.month++;
+                    }
+                    this.getNoOfDays();
+                },
+
+                getMatchesForDay(date) {
+                    return this.allMatches.filter(m => {
+                        return m.dateObj.getDate() === date &&
+                            m.dateObj.getMonth() === this.month &&
+                            m.dateObj.getFullYear() === this.year;
+                    }).sort((a, b) => a.hora.localeCompare(b.hora));
+                },
+
+                generateMatches() {
+                    const teams = [
+                        'Senior A Masc', 'Senior Femenino', 'Senior B Masc',
+                        'Junior Femenino', 'Junior Masculino',
+                        'Cadete A Masc', 'Cadete B Masc',
+                        'Infantil', 'Alevín', 'Benjamín'
+                    ];
+
+                    const rivals = [
+                        'Valencia Basket', 'Picken Claret', 'Godella', 'Torrent', 'L\'Horta Godella',
+                        'Alginet', 'Paterna', 'Mislata B', 'Don Bosco', 'Maristas', 'Salesianos'
+                    ];
+
+                    let allCategories = [];
+                    let startDate = new Date('2026-02-07');
+                    let endDate = new Date('2026-05-30');
+
+                    teams.forEach(teamName => {
+                        let matches = [];
+                        let currentDate = new Date(startDate);
+
+                        while (currentDate <= endDate) {
+                            // Randomly pick Sat or Sun
+                            let matchDate = new Date(currentDate);
+                            if (Math.random() > 0.5) {
+                                matchDate.setDate(matchDate.getDate() + 1); // Sunday
+                            }
+
+                            let isHome = Math.random() > 0.4;
+                            let rival = rivals[Math.floor(Math.random() * rivals.length)];
+                            let place = isHome ? (['Senior', 'Junior', 'Cadete'].some(t => teamName.includes(t)) ? 'Pabellón El Quint' : 'La Canaleta') : 'Fuera';
+
+                            // Format Date
+                            let options = { weekday: 'short', day: '2-digit', month: 'short' };
+                            let dateStr = matchDate.toLocaleDateString('es-ES', options);
+                            dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+                            let hour = (9 + Math.floor(Math.random() * 11)) + ':00'; // 09:00 to 19:00
+
+                            matches.push({
+                                rival: rival,
+                                fecha: dateStr,
+                                hora: hour,
+                                lugar: place,
+                                casa: isHome,
+                                dateObj: new Date(matchDate) // Store real date for calendar logic
+                            });
+
+                            // Next week
+                            currentDate.setDate(currentDate.getDate() + 7);
+                        }
+
+                        allCategories.push({
+                            name: teamName,
+                            matches: matches
+                        });
+                    });
+                    return allCategories;
+                }
+            }
+        }
+    </script>
+
+    <!-- Activities Section with Modal -->
+    <section id="actividades" class="py-16 bg-white" x-data="activitiesData()">
+        <div class="container mx-auto px-4">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-10 text-center">Nuestras <span
+                    class="text-mislata-orange">Actividades</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="activity in activities" :key="activity.id">
+                    <div @click="openModal(activity)"
+                        class="group p-8 rounded-2xl border-l-4 cursor-pointer bg-opacity-50 hover:bg-white hover:shadow-xl transition-all duration-300"
+                        :class="{ 'border-mislata-green bg-green-50': activity.color === 'green', 'border-mislata-orange bg-orange-50': activity.color === 'orange' }">
+
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 transition-colors"
+                            :class="{ 'bg-green-100 text-mislata-green group-hover:bg-mislata-green group-hover:text-white': activity.color === 'green', 'bg-orange-100 text-mislata-orange group-hover:bg-mislata-orange group-hover:text-white': activity.color === 'orange' }">
+
+                            <!-- Icons handling -->
+                            <svg x-show="activity.title.includes('Logotipo')" class="w-8 h-8" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                </path>
+                            </svg>
+                            <svg x-show="activity.title.includes('viajes') || activity.title.includes('Torneos')"
+                                class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                            <svg x-show="activity.title.includes('Charlas')" class="w-8 h-8" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                                </path>
+                            </svg>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3 transition-colors"
+                            :class="{ 'group-hover:text-mislata-green': activity.color === 'green', 'group-hover:text-mislata-orange': activity.color === 'orange' }"
+                            x-text="activity.title"></h3>
+                        <p class="text-gray-600 leading-relaxed" x-text="activity.shortDesc"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Activity Modal -->
+        <div x-show="activeActivity" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto"
+            aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+                <div x-show="activeActivity" x-transition.opacity
+                    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
+                    @click="closeModal()"></div>
+
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <div x-show="activeActivity" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+
+                    <div class="bg-white flex flex-col md:flex-row">
+                        <!-- Image Container (Left) -->
+                        <div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+                            <img :src="activeActivity?.image" alt="Activity Image" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Content Container (Right) -->
+                        <div class="md:w-1/2 p-8 md:p-12 relative overflow-y-auto max-h-[80vh]">
+                            <button @click="closeModal()"
+                                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 pr-8" x-text="activeActivity?.title"></h3>
+                            <div class="w-16 h-1 bg-mislata-green mb-6"></div>
+
+                            <div class="prose max-w-none text-gray-600 text-sm space-y-4"
+                                x-html="activeActivity?.fullDesc">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function activitiesData() {
+                return {
+                    activities: [
+                        {
+                            id: 1,
+                            title: 'Concurso de Logotipo Oficial',
+                            shortDesc: '¡Participa en el diseño de nuestra nueva imagen! Buscamos un logo que represente a las familias y los valores del club.',
+                            fullDesc: `
+                            <p class="mb-4 font-medium">La Asociación de Familias de Jugadores del Mislata Bàsquet Club, FemBàsquet, convoca un concurso de diseño de logotipo para elegir la imagen oficial de la asociación. Queremos un logo cercano, moderno y alegre.</p>
+                            
+                            <h4 class="font-bold text-mislata-green text-lg mb-2">¿Quién puede participar?</h4>
+                            <p class="mb-4">Podrán participar todas las personas vinculadas al Mislata BC y al entorno de FemBàsquet: familias, jugadores/as, entrenadores, personal del club y simpatizantes. Individual o en grupo.</p>
+                            
+                            <h4 class="font-bold text-mislata-green text-lg mb-2">Requisitos del diseño</h4>
+                            <ul class="list-disc pl-5 mb-4 space-y-1">
+                                <li>Original e inédito.</li>
+                                <li>Debe incluir: 'FemBàsquet' o las siglas 'FBM'.</li>
+                                <li>Legible en distintos tamaños.</li>
+                                <li>Se recomiendan colores del club (verde/naranja).</li>
+                                <li>No usar imágenes con derechos de autor sin permiso.</li>
+                            </ul>
+                            
+                            <h4 class="font-bold text-mislata-green text-lg mb-2">Formato y Envío</h4>
+                            <ul class="list-disc pl-5 mb-4 space-y-1">
+                                <li>Formato digital: PNG o JPG (min 2000px).</li>
+                                <li>Se agradece versión vectorial (SVG/PDF).</li>
+                                <li>Adjuntar: nombre, contacto y breve explicación.</li>
+                                <li>Enviar a: <a href="mailto:info@fembasquet.com" class="text-mislata-orange font-bold">info@fembasquet.com</a></li>
+                                <li>Asunto: 'Concurso logotipo FemBàsquet'.</li>
+                            </ul>
+
+                            <h4 class="font-bold text-mislata-green text-lg mb-2">Plazos y Fallo</h4>
+                            <ul class="list-disc pl-5 mb-4 space-y-1">
+                                <li>Límite entrega: <strong>1 de Marzo 2026</strong>.</li>
+                                <li>Votación familias: 10 de Marzo.</li>
+                                <li>Ganador/a: 15 de Marzo.</li>
+                            </ul>
+
+                            <h4 class="font-bold text-mislata-green text-lg mb-2">Premio</h4>
+                            <p class="mb-4">Lote de material del club y reconocimiento público. El diseño será la imagen oficial.</p>
+                            
+                            <p class="text-xs text-gray-500 mt-4 italic">La participación implica la cesión de derechos de uso a FemBàsquet y la aceptación de las bases.</p>
+                        `,
+                            image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                            color: 'orange'
+                        },
+                        {
+                            id: 2,
+                            title: 'Torneos y viajes',
+                            shortDesc: 'Organizamos experiencias inolvidables para nuestros jugadores, fomentando la convivencia y el espíritu de equipo.',
+                            fullDesc: 'Cada temporada, FemBàsquet se encarga de planificar y gestionar la participación en torneos nacionales e internacionales. Desde la logística del viaje hasta el alojamiento, nos aseguramos de que los jugadores solo tengan que preocuparse por disfrutar del baloncesto y hacer nuevos amigos. Estas experiencias fortalecen los lazos entre compañeros y crean recuerdos para toda la vida.',
+                            image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                            color: 'green'
+                        },
+                        {
+                            id: 3,
+                            title: 'Charlas formativas',
+                            shortDesc: 'Espacios de aprendizaje para padres y jugadores sobre nutrición, psicología deportiva y prevención de lesiones.',
+                            fullDesc: 'Creemos que la formación va más allá de la cancha. Por eso, organizamos regularmente charlas y talleres con expertos en diversas áreas: nutrición deportiva para optimizar el rendimiento, psicología para gestionar la presión y las emociones, y fisioterapia para prevenir lesiones. Estas sesiones están abiertas a todas las familias y buscan ofrecer herramientas útiles para el desarrollo integral de los jóvenes deportistas.',
+                            image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                            color: 'orange'
+                        }
+                    ],
+                    activeActivity: null,
+                    openModal(activity) {
+                        this.activeActivity = activity;
+                        document.body.classList.add('overflow-hidden');
+                    },
+                    closeModal() {
+                        this.activeActivity = null;
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                }
+            }
+        </script>
+    </section>
+
+    <!-- Board Section -->
+    <section id="junta" class="py-16 bg-green-50">
+        <div class="container mx-auto px-4">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-10 text-center">Junta <span
+                    class="text-mislata-green">Directiva</span></h2>
+
+            <!-- Changed grid from 4 to 3 (grid-cols-3 on md) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Board Member 1 -->
+                <div
+                    class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition-shadow border-t-4 border-mislata-green">
+                    <div
+                        class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl text-gray-400">
+                        👤
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Elisa Arias</h3>
+                    <p class="text-sm text-mislata-orange font-medium">Presidenta</p>
+                </div>
+
+                <!-- Board Member 2 -->
+                <div
+                    class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition-shadow border-t-4 border-mislata-orange">
+                    <div
+                        class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl text-gray-400">
+                        👤
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Francisco J. Pradas</h3>
+                    <p class="text-sm text-mislata-orange font-medium">Secretario</p>
+                </div>
+                <!-- Board Member 3 -->
+                <div
+                    class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition-shadow border-t-4 border-mislata-green">
+                    <div
+                        class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl text-gray-400">
+                        👤
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">María Paz Narbón</h3>
+                    <p class="text-sm text-mislata-orange font-medium">Tesorera</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaborate / Join Section -->
+    <section id="colaborar" class="py-16 bg-white relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/3 h-full bg-mislata-orange/5 skew-x-12 transform origin-top-right"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Info -->
+                <div class="lg:w-5/12">
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-6">¿Cómo puedes <span
+                            class="text-mislata-orange">Colaborar?</span></h2>
+                    <div class="text-sm text-gray-600 mb-8 space-y-4 leading-relaxed">
+                        <p>
+                            En Fembàsquet creemos que cada familia suma. Puedes colaborar haciéndote socia, participando
+                            en las actividades y asambleas, formando parte del voluntariado en eventos y proyectos
+                            solidarios, o apoyando con tu experiencia profesional (comunicación, organización de
+                            actividades, formación, etc.).
+                        </p>
+                        <p>
+                            También puedes contribuir difundiendo nuestras iniciativas en el club y en redes,
+                            proponiendo nuevas ideas y, si lo deseas, realizando aportaciones económicas que nos ayuden
+                            a seguir impulsando el baloncesto, los valores educativos y las acciones sociales vinculadas
+                            al Mislata Bàsquet Club.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-mislata-green mr-4">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-800">Voluntariado</h4>
+                                <p class="text-sm text-gray-600">Ayuda en la organización de eventos, actividades y
+                                    participando en las acciones de la asociación.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center text-mislata-orange mr-4">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-800">Patrocinios</h4>
+                                <p class="text-sm text-gray-600">Da visibilidad a tu empresa apoyando el deporte base
+                                    local.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div id="unete" class="lg:w-7/12 w-full">
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-mislata-green">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">¡Únete a la Asociación!</h3>
+                        <form class="space-y-4" action="https://formsubmit.co/info@fembasquet.com" method="POST">
+                            <!-- HoneyPot Anti-Spam -->
+                            <input type="text" name="_honey" style="display:none">
+                            <!-- Disable Captcha -->
+                            <input type="hidden" name="_captcha" value="false">
+                            <!-- Success Page -->
+                            <input type="hidden" name="_next" value="https://www.fembasquet.com">
+                            <!-- Subject -->
+                            <input type="hidden" name="_subject" value="Nueva solicitud de inscripción - FemBàsquet">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                                    <input type="text" name="nombre" required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mislata-green focus:border-transparent outline-none transition-all"
+                                        placeholder="Tu nombre">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+                                    <input type="text" name="apellidos" required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mislata-green focus:border-transparent outline-none transition-all"
+                                        placeholder="Tus apellidos">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                                    <input type="tel" name="telefono" required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mislata-green focus:border-transparent outline-none transition-all"
+                                        placeholder="Tu teléfono">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" name="email" required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mislata-green focus:border-transparent outline-none transition-all"
+                                        placeholder="tu@email.com">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                                <textarea name="mensaje" rows="4" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mislata-green focus:border-transparent outline-none transition-all"
+                                    placeholder="¿En qué podemos ayudarte?"></textarea>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="privacy_policy" name="privacy_policy" type="checkbox" required
+                                        class="focus:ring-mislata-green h-4 w-4 text-mislata-green border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="privacy_policy" class="font-medium text-gray-700">He leído y acepto la
+                                        <a href="politica-privacidad.html" target="_blank"
+                                            class="text-mislata-green hover:text-mislata-orange underline">Política de
+                                            Privacidad</a></label>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full py-3 bg-mislata-green text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition-colors">
+                                Enviar Solicitud
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div
+                            class="w-8 h-8 bg-mislata-green rounded-full flex items-center justify-center font-bold text-sm">
+                            FB</div>
+                        <span class="font-heading font-bold text-xl">FemBàsquet</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Asociación de familias del Mislata Bàsquet Club. Trabajando juntos por el deporte formativo y
+                        los valores del baloncesto.
+                    </p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-mislata-orange">Enlaces de Interés</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="https://mislatabc.com" target="_blank"
+                                class="hover:text-white transition-colors">Web Oficial Mislata BC</a></li>
+                        <li><a href="https://fbcv.es" target="_blank"
+                                class="hover:text-white transition-colors">Federación Baloncesto C.V.</a></li>
+                        <li><a href="https://www.fbcv.es/varios/lopivi" target="_blank"
+                                class="hover:text-white transition-colors">FBCV - LOPIVI (Protección Menor)</a></li>
+                        <li><a href="politica-privacidad.html" class="hover:text-white transition-colors">Política de
+                                Privacidad</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-mislata-orange">Síguenos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mislata-green transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mislata-green transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mislata-green transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 1.62-.03 3.25-.32 4.85-.25 1.45-.93 2.78-2.03 3.79-1.45 1.35-3.39 1.91-5.38 1.64-2.24-.31-4.2-1.79-5.18-3.79-1.01-2.05-.82-4.52.54-6.42 1.15-1.6 3.05-2.43 4.96-2.15v4.03c-1.19-.24-2.58.26-3.21 1.34-.69 1.17-.32 2.89.87 3.59 1.16.68 2.8.21 3.39-1.07.61-1.33.45-2.91.44-4.36V4.88c0-1.63.02-3.28.02-4.86z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2025 Asociación FemBàsquet Mislata. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div x-data="{ show: !localStorage.getItem('cookiesAccepted') }" x-show="show"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-full"
+        x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-full"
+        class="fixed bottom-0 left-0 w-full bg-gray-900/95 backdrop-blur text-white p-4 z-50 shadow-2xl border-t border-gray-700">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-gray-300 text-center md:text-left">
+                <p>Este sitio web utiliza cookies para mejorar tu experiencia de navegación. Al continuar navegando,
+                    aceptas nuestra <a href="politica-privacidad.html"
+                        class="text-mislata-orange underline hover:text-white">Política de
+                        Privacidad y Cookies</a>.</p>
+            </div>
+            <div class="flex gap-4">
+                <button @click="show = false; localStorage.setItem('cookiesAccepted', 'false')"
+                    class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+                    Rechazar
+                </button>
+                <button @click="show = false; localStorage.setItem('cookiesAccepted', 'true')"
+                    class="px-6 py-2 bg-mislata-green text-white text-sm font-bold rounded-full hover:bg-green-600 transition-colors shadow-lg">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
